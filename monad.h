@@ -1,20 +1,22 @@
+#include "unit.h"
 #include <concepts>
-#include <optional>
 
 #ifndef __MONAD__
 #define __MONAD__
 
 // class Monad m where
+//   (constructor) ::   a               -> m a
 //   bindM         :: m a -> (a -> m b) -> m b
 //   bindM         :: m a ->  m b       -> m b
-//   (constructor) ::   a               -> m a
 
 template <template<class> class M, class A, class B = Unit>
-concept Monad = requires(M<A> m_a, M<B> m_b, A a, M<B> f(A)) {
-  { bindM(m_a, f) }   -> std::same_as< M<B> >;
-  { bindM(m_a, m_b) } -> std::same_as< M<B> >;
-  { M<A>(a) }         -> std::same_as< M<A> >;
-};
+concept Monad = 
+requires(A a) 
+  { { M<A>(a) } -> std::same_as< M<A> >; } && 
+requires(M<A> ma, M<B> f(A)) 
+  { { bindM(ma, f) } -> std::same_as< M<B> >; } && 
+requires(M<A> ma, M<B> mb) 
+  { { bindM(ma, mb) } -> std::same_as< M<B> >; };
 
 // operator for left-associative infix bindM
 template <class F, template<class> class M, class A>

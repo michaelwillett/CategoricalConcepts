@@ -1,7 +1,6 @@
-#include "functional_stl.h"
+#include "monad_stl.h"
 
 #include <string>
-#include <set>
 #include <sstream>
 #include <iostream>
  
@@ -58,15 +57,15 @@ int main() {
   // bindM(x, [](auto& x) { return ++x; } );
 
   if(x.has_value()) {
-    std::cout << "x sequence successful\n";
+    std::cout << "x still valid\n";
   } else {
-    std::cout << "x sequence failed\n";
+    std::cout << "x is null\n";
   }
 
 
   if(y.has_value()) {
-    std::cout << "y sequence successful\n";
+    std::cout << "sequence successful\n";
   } else {
-    std::cout << "y sequence failed\n";
+    std::cout << "sequence failed\n";
   }
 }

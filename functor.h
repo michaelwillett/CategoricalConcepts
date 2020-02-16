@@ -1,9 +1,8 @@
+#include "unit.h"
 #include <concepts>
 
 #ifndef __FUNCTOR__
 #define __FUNCTOR__
-
-struct Unit{};
 
 // class Functor f where
 //     fmap :: (a -> b) -> f a -> f b
