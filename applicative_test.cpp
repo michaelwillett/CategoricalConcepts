@@ -43,13 +43,10 @@ int main() {
     std::cout << "y is null\n";
   }
 
-  using F = decltype(make_tuple);
-  auto tuplize = pureA<std::optional, F>(make_tuple);
-
   std::optional<std::string> s{ "hello" };
   std::optional<float> p{ 3.14 };
   
-  auto full_tuple = tuplize << c << s << p;
+  auto full_tuple = make_tuple << c << s << p;
 
   if(full_tuple.has_value()) {
     std::cout << "tuple " << std::get<0>(*full_tuple);

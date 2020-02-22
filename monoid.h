@@ -1,25 +1,23 @@
-#include <concepts>
+// #include <concepts>
 
 // class Semigroup m where
-//   (<>) :: m -> m -> m
-
-//   -- defining sconcat is unnecessary, it has a default implementation
-//   sconcat :: NonEmpty m -> m
-//   sconcat = ...
-
-//   -- defining stimes is unnecessary, it has a default implementation
-//   stimes :: Integral a => a -> m -> m
-//   stimes = ...
-
-// infixr 6 <>
+//   mappend :: m -> m -> m
 
 // class Semigroup m => Monoid m where
 //   mempty :: m
 
-//   -- defining mappend is unnecessary, it copies from Semigroup
-//   mappend :: m -> m -> m
-//   mappend = (<>)
 
-//   -- defining mconcat is optional, since it has the following default:
-//   mconcat :: [m] -> m
-//   mconcat = foldr mappend mempty
+// template <class M>
+// concept Semigroup = requires(M a, M b) {
+//   { mappend(a,b) } -> std::same_as< M >;
+// };
+
+// template <class M>
+// concept Monoid = 
+//   requires { Semigroup<M>; } &&
+//   requires { mempty<Semigroup<M>>(); };
+
+
+
+// TODO: not sure how te define mempty with a separate context from
+//       the semigroup, maybe Monoids would be better as a struct?

@@ -8,7 +8,8 @@
 //   liftA         :: f (a -> b) -> f a -> f b
 //   liftA2        :: (a -> b -> c) -> f a -> f b -> f c
 
-template <template<class> class F, class A, class B = Unit, class C = Unit>
+template <template<class> class F, class A, 
+          class B = Categories::Unit, class C = Categories::Unit>
 concept Applicative = 
   Functor<F,A,B> &&
   requires (A a) 
@@ -26,7 +27,5 @@ inline auto operator<<(F<G> g, F<A> fa) -> F<auto> { return applyA(g, fa); };
 template <template<class> class F, class A>
 requires (Applicative<F,A>)
 inline F<A> pureA(A a) { return F<A>(a); };
-
-
 
 #endif

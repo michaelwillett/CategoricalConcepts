@@ -40,13 +40,13 @@ std::list<B> fmap(F f, std::list<A>& a) {
 //    OPTIONAL
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-template <class F, class A, class B = std::invoke_result_t<F,A&>>
-std::optional<B> fmap(F f, std::optional<A>& a) {
-  if (a.has_value())
-    return {f(*a)};
-  else
-    return { std::nullopt };
-};
+template <class F, class A>
+std::optional<auto> fmap(F f, std::optional<A>& a) {
+    using B = decltype(Categories::evalutated_bind_front(f,*a));
+    return (a.has_value()) 
+              ? std::optional<B>{Categories::evalutated_bind_front(f,*a)}
+              : std::nullopt;
+}
 
 }
 

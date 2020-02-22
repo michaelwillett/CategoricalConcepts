@@ -4,3 +4,4 @@ test
 stringable
 test.dSYM/Contents/Info.plist
 build/*
+.DS_Store

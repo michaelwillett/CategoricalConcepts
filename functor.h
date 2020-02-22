@@ -9,9 +9,13 @@ static_assert(__cpp_concepts >= 201907, "concepts not supported in this gcc vers
 // class Functor f where
 //     fmap :: (a -> b) -> f a -> f b
 
-template <template<class> class F, class A, class B = Unit>
-concept Functor = requires(F<A> a, B f(A)) {
+template <template<class> class F, class A, class B = Categories::Unit>
+concept Functor = requires(B f(A), F<A> a) {
   { fmap(f, a) } -> std::same_as< F<B> >;
 };
+
+template <template<class> class F, class A, class G>
+requires (Functor<F,A>)
+inline auto operator<<(G g, F<A> fa) -> F<auto> { return fmap(g, fa); };
 
 #endif
