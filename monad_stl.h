@@ -1,12 +1,12 @@
 #ifndef __MONAD_STL__
 #define __MONAD_STL__
 
+#include "applicative_stl.h"
 #include "monad.h"
 
 #include <algorithm>
 #include <vector>
 #include <list>
-#include <optional>
 
 
 namespace std {
@@ -16,7 +16,7 @@ namespace std {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
 namespace detail {
-  template <class...>
+  template <class>
   constexpr bool is_optional = false;
 
   template <class A>

@@ -1,8 +1,7 @@
-#include "unit.h"
-#include <concepts>
-
 #ifndef __MONAD__
 #define __MONAD__
+
+#include "applicative.h"
 
 // class Monad m where
 //   returnM ::   a               -> m a    (use constructor to resolve namespace ambiguity)
@@ -11,6 +10,7 @@
 
 template <template<class> class M, class A, class B = Unit>
 concept Monad = 
+  Applicative<M,A,B> &&
   requires(A a) 
     { { M<A>(a) } -> std::same_as< M<A> >; } && 
   requires(M<A> ma, M<B> f(A)) 

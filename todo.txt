@@ -1,0 +1,6 @@
+ - Monoids
+ - Altenatives
+ - Default implementation of LiftA and LiftA2 if either is missing
+ - constructors for applicative/monad types should accept any types
+     that construct the applicative/monad types, not just the embedded
+     type. (eg `returnM<std::optional,int>(std::nullopt)` should work) 

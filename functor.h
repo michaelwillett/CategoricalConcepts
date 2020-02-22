@@ -1,8 +1,10 @@
-#include "unit.h"
-#include <concepts>
-
 #ifndef __FUNCTOR__
 #define __FUNCTOR__
+
+#include "categories_common.h"
+#include <concepts>
+
+static_assert(__cpp_concepts >= 201907, "concepts not supported in this gcc version");
 
 // class Functor f where
 //     fmap :: (a -> b) -> f a -> f b

@@ -21,24 +21,15 @@ auto add2 = [](int a) { return a+2; };
 
 int main() {
 
-  auto add2p = pure<std::optional, decltype(add2)>(add2);
-  auto addp = pure<std::optional, decltype(add)>(add);
-  auto c = pure<std::optional, int>(8);
-  auto d = pure<std::optional, int>(7);
-  // auto b = std::optional<decltype(a)>(a);
+  auto add2p = pureA<std::optional, decltype(add2)>(add2);
+  auto addp = pureA<std::optional, decltype(add)>(add);
+  auto c = pureA<std::optional, int>(8);
+  std::optional<int> d = std::nullopt;
 
-  // auto a = pure<std::optional,int>(5);
 
-  auto bf = std::bind_front(add, 1);
-  auto bf2 = std::bind_front(bf, 2);
+  auto x = applyA(add2p, c);
+  auto y = addp << c << d;
 
-  std::cout << bf2() << "\n" ;
-
-  auto x = liftA(add2p, c);
-  auto y = liftA(addp, c);
-  auto z = liftA(y, d);
-
-  
 
   if(x.has_value()) {
     std::cout << "x still valid " << *x << "\n" ;
@@ -46,18 +37,19 @@ int main() {
     std::cout << "x is null\n";
   }
     
-  if(z.has_value()) {
-    std::cout << "y still valid " << *z << "\n" ;
+  if(y.has_value()) {
+    std::cout << "y still valid " << *y << "\n" ;
   } else {
     std::cout << "y is null\n";
   }
 
   using F = decltype(make_tuple);
-  auto tuplize = pure<std::optional, F>(make_tuple);
+  auto tuplize = pureA<std::optional, F>(make_tuple);
 
   std::optional<std::string> s{ "hello" };
   std::optional<float> p{ 3.14 };
-  auto full_tuple = liftA(liftA(liftA(tuplize, c), s), p);
+  
+  auto full_tuple = tuplize << c << s << p;
 
   if(full_tuple.has_value()) {
     std::cout << "tuple " << std::get<0>(*full_tuple);

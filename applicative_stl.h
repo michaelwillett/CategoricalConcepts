@@ -1,34 +1,20 @@
 #ifndef __APPLICATIVE_STL__
 #define __APPLICATIVE_STL__
 
+#include "functor_stl.h"
 #include "applicative.h"
-#include "functor_stl.h" // applicative requires Funtor for all types
-
-
-static_assert(__cpp_concepts >= 201907, "concepts not supported in this version");
 
 namespace std {
-
-namespace detail {
-  template <class F, class A>
-  auto bind_front_eval(F f, A& a) {
-    if constexpr (std::is_invocable_v<F,A&>) {
-      return f(a);
-    } else {
-      return std::bind_front(f, a);
-    }
-  }
-}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //    OPTIONAL
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 template <class F, class A>
-std::optional<auto> liftA(std::optional<F> f, std::optional<A>& a) {
-    using B = decltype(detail::bind_front_eval(*f,*a));
+std::optional<auto> applyA(std::optional<F> f, std::optional<A>& a) {
+    using B = decltype(detail::evalutated_bind_front(*f,*a));
     return (f.has_value() && a.has_value()) 
-              ? std::optional<B>{detail::bind_front_eval(*f,*a)}
+              ? std::optional<B>{detail::evalutated_bind_front(*f,*a)}
               : std::nullopt;
 }
 
