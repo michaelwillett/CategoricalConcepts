@@ -14,10 +14,10 @@ auto safe_invert = [](const auto& a) {
       : std::optional<A>(1/a);
 };
 
-auto decrement = [](const auto& a) -> 
-std::optional<std::decay_t<decltype(a)>> {
+auto decrement = [](const auto& a) {
+  using A = std::decay_t<decltype(a)>;
   std::cout << "dec( " << a << " )\n";
-  return {a-1};
+  return returnM<std::optional,A>(a-1);
 };
 
 // if you prefer to use templated classes, you cannot use
@@ -32,20 +32,20 @@ template <template<class> class T, class A>
 requires (Monad<T,A>)
 T<A> monad_test(T<A> x) {
   return {
-    x ->* safe_invert
-      ->* safe_invert
-      ->* decrementT<float>
-      ->* safe_invert
-      ->* safe_invert
-      ->* decrement
-      ->* safe_invert
-      ->* safe_invert
-      ->* decrement
-      ->* safe_invert
-      ->* safe_invert
-      ->* decrement
-      ->* safe_invert
-      ->* safe_invert
+    x >> safe_invert
+      >> safe_invert
+      >> decrementT<float>
+      >> safe_invert
+      >> safe_invert
+      >> decrement
+      >> safe_invert
+      >> safe_invert
+      >> decrement
+      >> safe_invert
+      >> safe_invert
+      >> decrement
+      >> safe_invert
+      >> safe_invert
   };
 }
 
