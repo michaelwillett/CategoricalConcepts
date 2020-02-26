@@ -12,17 +12,19 @@ namespace std {
 
 template <class F, class A>
 std::optional<auto> applyA(std::optional<F> f, std::optional<A>& a) {
-    using B = decltype(Categories::evalutated_bind_front(*f,*a));
-    return (f.has_value() && a.has_value()) 
-              ? std::optional<B>{Categories::evalutated_bind_front(*f,*a)}
-              : std::nullopt;
+  using B = decltype(Categories::evalutated_bind_front(*f,*a));
+  return (f.has_value() && a.has_value()) 
+            ? std::optional<B>{Categories::evalutated_bind_front(*f,*a)}
+            : std::nullopt;
 }
 
-template <class F, class A, class B, class C = std::invoke_result_t<F,A&,B&>>
+template <class F, class A, class B>
 std::optional<C> liftA2(F f, std::optional<A>& a, std::optional<B>& b) {
+
+  using C = decltype(Categories::evalutated_bind_front(*f,*a,*b));
   return 
     (a.has_value() && b.has_value()) 
-      ? f(*a,*b) 
+      ? std::optional<C>{Categories::evalutated_bind_front(*f,*a,*b)}
       : std::nullopt;
 }
 

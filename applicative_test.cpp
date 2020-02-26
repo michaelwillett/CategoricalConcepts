@@ -4,8 +4,6 @@
 #include <tuple>
 #include <sstream>
 #include <iostream>
-
-#include <functional>
  
 
 auto make_tuple = [](auto a, auto b, auto c) {

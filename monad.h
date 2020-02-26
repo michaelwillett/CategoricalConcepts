@@ -8,7 +8,7 @@
 //   bindM   :: m a -> (a -> m b) -> m b
 //   bindM   :: m a ->  m b       -> m b
 
-template <template<class> class M, class A, class B = Unit>
+template <template<class> class M, class A, class B = Categories::Unit>
 concept Monad = 
   Applicative<M,A,B> &&
   requires(A a) 
