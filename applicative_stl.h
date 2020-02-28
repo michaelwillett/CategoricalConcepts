@@ -19,7 +19,7 @@ std::optional<auto> applyA(std::optional<F> f, std::optional<A>& a) {
 }
 
 template <class F, class A, class B>
-std::optional<C> liftA2(F f, std::optional<A>& a, std::optional<B>& b) {
+std::optional<auto> liftA2(F f, std::optional<A>& a, std::optional<B>& b) {
 
   using C = decltype(Categories::evalutated_bind_front(*f,*a,*b));
   return 
